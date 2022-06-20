@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backgroundQuangcao"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:scaleType="fitXY" />
+    <RelativeLayout
+        android:background="#60000000"
+        android:id="@+id/relative1"
+        android:layout_alignBottom="@+id/backgroundQuangcao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageQuangcao"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="2dp" />
+        <TextView
+            android:id="@+id/tvTitleQuangcao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageQuangcao"
+            android:layout_toRightOf="@+id/imageQuangcao"
+            android:text="Phía sau một cô gái"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_marginTop="7dp"
+            android:layout_toRightOf="@id/imageQuangcao"
+            android:layout_below="@+id/tvTitleQuangcao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvNoidung"
+                android:textColor="@color/white"
+                android:text="cùng thưởng thức ca khúc mới của Soobin Hoàng Sơn"
+                android:maxLines="2"
+                android:layout_marginRight="40dp"
+                android:textSize="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

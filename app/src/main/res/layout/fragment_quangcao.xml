@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.QuangcaoFragment">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:background="#9EDFA0">
+
+        </androidx.viewpager.widget.ViewPager>
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/custom_bg_vien_quangcao">
+        </View>
+        <me.relex.circleindicator.CircleIndicator
+            app:ci_drawable="@drawable/custom_bg_vien_indicator"
+            android:layout_alignParentRight="true"
+            android:id="@+id/indicatorDefalt"
+            android:layout_width="wrap_content"
+            android:layout_height="13dp"
+            android:layout_marginTop="10dp">
+        </me.relex.circleindicator.CircleIndicator>
+
+</RelativeLayout>

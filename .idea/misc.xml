@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_appnhac.xml" value="0.111" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_title_playlist.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_vien_quangcao.xml" value="0.111" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_circleIndicator.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_quangcao.xml" value="0.176" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_vien_indicator.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_view_playlist.xml" value="0.143" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/dong_playlist.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/iconmoreplaylist2.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_danhsach_baihat.xml" value="0.264" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/custom_cicleindicator.xml" value="0.19166666666666668" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_album.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_baihathot.xml" value="0.25052083333333336" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_banner.xml" value="0.152" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_playlist.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_album_hot.xml" value="0.2212962962962963" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_bai_hat_hot.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_chu_de__the_loai_.xml" value="0.264" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_demo.xml" value="0.22870370370370371" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_playlist.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_quangcao.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_tim_kiem_.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_trang_chu_.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
