@@ -45,7 +45,6 @@ public class PlayMusicActivity extends AppCompatActivity {
     LinearLayout layoutLoading;
     private MyService myService;
     boolean isServiceConnected;
-    String ten,hinhanh, baihat, casi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +53,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         initView();
         getDataIntent();
-        ten = baihatArrayList.get(0).getTenBaihat();
-        casi = baihatArrayList.get(0).getCasi();
-        hinhanh = baihatArrayList.get(0).getHinhBahat();
-        baihat = baihatArrayList.get(0).getLinkBaihat();
         evenClick();
 
         Handler handlerUpdate = new Handler();
@@ -67,6 +62,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 TimeSong((int) myService.getDuration());
                 UpdateTimeDemo(currentTime);
                 setStatusIButPlay();
+
                 handlerUpdate.postDelayed(this, 1000);
             }
         }, 1000);
@@ -237,15 +233,6 @@ public class PlayMusicActivity extends AppCompatActivity {
             pagerPlayNhacAdapter.AddFragmet(fragment_danhsachplay);
             pagerPlayNhacAdapter.AddFragmet(fragment_dianhac);
             viewPagerPlayMusic.setAdapter(pagerPlayNhacAdapter);
-//            if (baihatArrayList.size() > 0) {
-//                Intent intent = new Intent(PlayMusicActivity.this, MyService.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("baihatplay", baihatArrayList);
-//                intent.putExtras(bundle);
-//                startService(intent);
-//                bindService(intent, connection, Context.BIND_AUTO_CREATE);
-//                fragment_dianhac.PlayNhac(baihatArrayList.get(position).getHinhBahat());
-//            }
     }
 
     private void TimeSong(int duration) {

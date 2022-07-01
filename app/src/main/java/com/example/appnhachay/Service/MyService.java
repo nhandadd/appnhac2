@@ -22,6 +22,7 @@ import android.widget.RemoteViews;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.appnhachay.Fragment.DianhacFragment;
 import com.example.appnhachay.Model.Baihat;
 import com.example.appnhachay.R;
 
@@ -43,7 +44,7 @@ public class MyService extends Service {
       private boolean stopService = false;
       private boolean repeat = false;
       private boolean random = false;
-     private int mPosition = 0;
+      private int mPosition = 0;
       int positionRandom = 0;
       private OnListenDuration onListenDuration;
       private long duration = 0;
@@ -51,6 +52,7 @@ public class MyService extends Service {
       boolean next = false;
 
     public class ServiceHandler extends Handler {
+        DianhacFragment dianhacFragment;
         private int currentTime = 0;
         private Handler handler;
         String ten,hinhanh, baihat, casi;
@@ -174,7 +176,10 @@ public class MyService extends Service {
                     if (mPosition < 0){
                         mPosition = baihats.size() - 1;
                     }
-                }  startMp3(baihats,mPosition);
+                }
+//                serviceHandler.dianhacFragment.PlayNhac(baihats.get(mPosition).getHinhBahat());
+                serviceHandler.startMp3(baihats,mPosition);
+
                 getUpdateCurrentTime();
             }
         }
@@ -203,7 +208,9 @@ public class MyService extends Service {
                             if (mPosition > (baihats.size() - 1) ){
                                 mPosition = 0;
                             }
-                        } startMp3(baihats,mPosition);
+                        }
+//                        serviceHandler.dianhacFragment.PlayNhac(baihats.get(mPosition).getHinhBahat());
+                        serviceHandler.startMp3(baihats,mPosition);
                         getUpdateCurrentTime();
                     }
             }
@@ -273,6 +280,7 @@ public class MyService extends Service {
                                 mPosition = 0;
                             }
                             serviceHandler.startMp3(baihats,mPosition);
+                            dianhacFragment.PlayNhac(baihats.get(mPosition).getHinhBahat());
                         }
                         next = false;
                         handler1.removeCallbacks(this);
@@ -390,7 +398,7 @@ public class MyService extends Service {
         }
         remoteViews.setOnClickPendingIntent(R.id.imageClear,getPendingIntent(this,CLEAR_MUSIC_CODE));
         remoteViews.setOnClickPendingIntent(R.id.imagePre,getPendingIntent(this,PRE_MUSIC_CODE));
-        remoteViews.setOnClickPendingIntent(R.id.imageClear,getPendingIntent(this,NEXT_MUSIC_CODE));
+        remoteViews.setOnClickPendingIntent(R.id.imageNext,getPendingIntent(this,NEXT_MUSIC_CODE));
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
                 .setSmallIcon(R.drawable.ic_launcher_background)

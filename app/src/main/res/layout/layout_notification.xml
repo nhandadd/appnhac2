@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:weightSum="12"
     android:layout_width="match_parent"
-    android:padding="5dp"
+    android:padding="2dp"
     android:layout_height="150dp"
     android:background="@drawable/custom_bg_notification">
 
@@ -45,7 +45,7 @@
                 android:gravity="top"
                 android:id="@+id/tvCasiSv"
                 android:layout_weight="2"
-                android:text="casissssssssssssssssssssssssssssssss"
+                android:text="Preview Casi"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"/>
         </LinearLayout>
