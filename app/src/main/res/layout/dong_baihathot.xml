@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="5dp">
+    android:layout_marginStart="2dp"
+    android:layout_marginVertical="4dp">
 
     <ImageView
         android:id="@+id/imageBaihatHot"
-        android:scaleType="fitXY"
         android:layout_width="80dp"
-        android:layout_height="80dp"/>
+        android:layout_height="80dp"
+        android:scaleType="fitXY" />
     <TextView
         android:text="Phia Sau Mot Co Gai"
         android:textSize="18dp"

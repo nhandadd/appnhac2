@@ -44,7 +44,6 @@ public class BaiHatHotFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Baihat>> call, Response<List<Baihat>> response) {
                 ArrayList<Baihat> baihatArrayList = (ArrayList<Baihat>) response.body();
-                Log.d("BBB", baihatArrayList.get(1).getTenBaihat());
                 baihatHotAdapter = new BaihatHotAdapter(getActivity(), baihatArrayList);
                 rcvBaihatHot.setAdapter(baihatHotAdapter);
 

@@ -45,7 +45,6 @@ public class QuangcaoFragment extends Fragment {
         getData();
         return view;
     }
-
     private void anhxa() {
         viewPager = view.findViewById(R.id.viewPager2);
         circleIndicator = view.findViewById(R.id.indicatorDefalt);
@@ -57,16 +56,9 @@ public class QuangcaoFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Quangcao>> call, Response<List<Quangcao>> response) {
                 arrayQuangcao  = (ArrayList<Quangcao>) response.body();
-                Log.d("BBB", arrayQuangcao.get(0).getHinhAnh());
                quangcaoAdapter = new QuangcaoAdapter(getActivity(), arrayQuangcao);
                 viewPager.setAdapter(quangcaoAdapter);
                 circleIndicator.setViewPager(viewPager);
-                viewPager.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                    @Override
-                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                    }
-                });
                 handler = new Handler();
                 runnable = new Runnable() {
                     @Override

@@ -1,23 +1,29 @@
 package com.example.appnhachay.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.appnhachay.Activity.DanhsachBaihatActivity;
+import com.example.appnhachay.Activity.DanhsachPlaylistActivity;
 import com.example.appnhachay.Adapter.PlaylistAdapter;
 import com.example.appnhachay.Model.Playlist;
 import com.example.appnhachay.R;
 import com.example.appnhachay.Service.ApiService;
 import com.example.appnhachay.Service.DataService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +34,24 @@ import retrofit2.Response;
 public class PlaylistFragment extends Fragment {
 
     View view;
-    ListView listView;
+    ListView lvPlaylist;
     TextView tvTitle, tvXemthem;
-    ArrayList<Playlist> arrayPlaylist;
+    ArrayList<Playlist> playlistArrayList;
     PlaylistAdapter playlistAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_playlist, container, false);
-        listView = view.findViewById(R.id.listviewPlaylist);
+        lvPlaylist = view.findViewById(R.id.listviewPlaylist);
         tvTitle = view.findViewById(R.id.tvTitlePlaylist);
         tvXemthem = view.findViewById(R.id.tvViewMorePlaylist);
+        tvXemthem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Intent intent1 = new Intent(getActivity(),DanhsachPlaylistActivity.class);
+                startActivity(intent1);
+            }
+        });
         getData();
         return view;
     }
@@ -48,10 +61,18 @@ public class PlaylistFragment extends Fragment {
             callQuangcao.enqueue(new Callback<List<Playlist>>() {
                 @Override
                 public void onResponse(Call<List<Playlist>> call, Response<List<Playlist>> response) {
-                  arrayPlaylist = (ArrayList<Playlist>) response.body();
-                   playlistAdapter = new PlaylistAdapter(getActivity(), android.R.layout.simple_list_item_1,arrayPlaylist);
-                   listView.setAdapter(playlistAdapter);
-                   setListViewHeightBasedOnChildren(listView);
+                    playlistArrayList = (ArrayList<Playlist>) response.body();
+                   playlistAdapter = new PlaylistAdapter(getActivity(), android.R.layout.simple_list_item_1,playlistArrayList);
+                    lvPlaylist.setAdapter(playlistAdapter);
+                   setListViewHeightBasedOnChildren(lvPlaylist);
+                    lvPlaylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getActivity(), DanhsachBaihatActivity.class);
+                            intent.putExtra("itemplaylist",playlistArrayList.get(position));
+                            startActivity(intent);
+                        }
+                    });
                 }
                 @Override
                 public void onFailure(Call<List<Playlist>> call, Throwable t) {
@@ -78,7 +99,6 @@ public class PlaylistFragment extends Fragment {
 
             }
         }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);

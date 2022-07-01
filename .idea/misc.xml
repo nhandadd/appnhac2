@@ -3,31 +3,61 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_appnhac.xml" value="0.111" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_appnhac.xml" value="0.136" />
         <entry key="..\:/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_title_playlist.xml" value="0.1" />
         <entry key="..\:/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_vien_quangcao.xml" value="0.111" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/bg_tablayout.xml" value="0.1865" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_appnhac.xml" value="0.12" />
         <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_circleIndicator.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_playlist.xml" value="0.1295" />
         <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_quangcao.xml" value="0.176" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_tablayout.xml" value="0.1865" />
         <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_vien_indicator.xml" value="0.1" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_view_playlist.xml" value="0.143" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_vienduoi.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/custom_bg_view_playlist.xml" value="0.12" />
         <entry key="..\:/AppNhacHay/app/src/main/res/drawable/dong_playlist.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/drawable/ic_pause.xml" value="0.1" />
         <entry key="..\:/AppNhacHay/app/src/main/res/drawable/iconmoreplaylist2.xml" value="0.1" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_danhsach_baihat.xml" value="0.264" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_danhsach_album.xml" value="0.25052083333333336" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_danhsach_baihat.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_danhsach_chude.xml" value="0.16799999999999998" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_danhsach_playlist.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_danhsach_theloai_theo_chude.xml" value="0.10833333333333334" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/activity_play_music.xml" value="0.2" />
         <entry key="..\:/AppNhacHay/app/src/main/res/layout/custom_cicleindicator.xml" value="0.19166666666666668" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_.xml" value="0.187109375" />
         <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_album.xml" value="0.2" />
         <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_baihathot.xml" value="0.25052083333333336" />
         <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_banner.xml" value="0.152" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_playlist.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_danhsach_baihat.xml" value="0.264" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_danhsach_chude.xml" value="0.16" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_danhsach_playlist.xml" value="0.16" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_list_album.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_playlist.xml" value="0.25" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_playmusic.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_search.xml" value="0.253125" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/dong_theloai_theo_chude.xml" value="0.24947916666666667" />
         <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_album_hot.xml" value="0.2212962962962963" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_bai_hat_hot.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_bai_hat_hot.xml" value="0.176" />
         <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_chu_de__the_loai_.xml" value="0.264" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_danhsach_play_music.xml" value="0.1787037037037037" />
         <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_demo.xml" value="0.22870370370370371" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_playlist.xml" value="0.1" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_quangcao.xml" value="0.1" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_tim_kiem_.xml" value="0.1" />
-        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_trang_chu_.xml" value="0.1" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_dianhac.xml" value="0.25364583333333335" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_playlist.xml" value="0.12" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_quangcao.xml" value="0.264" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_tim_kiem_.xml" value="0.2" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/fragment_trang_chu_.xml" value="0.144" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/layout_loading.xml" value="0.25025641025641027" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/layout/layout_notification.xml" value="0.22870370370370371" />
+        <entry key="..\:/AppNhacHay/app/src/main/res/menu/search_baihat.xml" value="0.1" />
         <entry key="..\:/AppNhacHay/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/appnhachay service new/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_vien_quangcao.xml" value="0.117" />
+        <entry key="..\:/appnhachay service new/AppNhacHay/app/src/main/res/drawable/custom_bg_notification.xml" value="0.117" />
+        <entry key="..\:/appnhachay service new/AppNhacHay/app/src/main/res/drawable/custom_bg_tablayout.xml" value="0.117" />
+        <entry key="..\:/appnhachay service new/AppNhacHay/app/src/main/res/layout/activity_play_music.xml" value="0.20462962962962963" />
+        <entry key="..\:/appnhachay service new/AppNhacHay/app/src/main/res/layout/fragment_album_hot.xml" value="0.1537037037037037" />
+        <entry key="..\:/appnhachay service new/AppNhacHay/app/src/main/res/layout/layout_notification.xml" value="0.264" />
       </map>
     </option>
   </component>

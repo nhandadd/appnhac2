@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.TimKiem_Fragment"
-    android:background="#CDDC39">
+    android:background="@drawable/custom_bg_appnhac"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.TimKiem_Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutTimkiem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B961FA">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarTimkiem"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvTimkiem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/tim_kiem_fragment" />
-
-</FrameLayout>
+        android:layout_below="@id/appBarLayoutTimkiem"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    <TextView
+        android:textColor="#4A4A4A"
+        android:visibility="gone"
+        android:textSize="25sp"
+        android:text="không tìm thấy bài hát này"
+        android:layout_centerInParent="true"
+        android:id="@+id/tvThongbao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

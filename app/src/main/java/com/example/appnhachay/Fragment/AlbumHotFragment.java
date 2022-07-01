@@ -1,17 +1,18 @@
 package com.example.appnhachay.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.appnhachay.Activity.DanhsachAlbumActivity;
 import com.example.appnhachay.Adapter.AlbumAdapter;
 import com.example.appnhachay.Model.Album;
 import com.example.appnhachay.R;
@@ -37,6 +38,13 @@ public class AlbumHotFragment extends Fragment {
         recyclerViewAlbum = view.findViewById(R.id.rcvAlbum);
        tvTitleAlbum = view.findViewById(R.id.tvTitleAlbum);
        tvXemThemAlbum = view.findViewById(R.id.tvXemthemAlbum);
+       tvXemThemAlbum.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(getActivity(), DanhsachAlbumActivity.class);
+               startActivity(intent);
+           }
+       });
        getData();
        return view;
     }

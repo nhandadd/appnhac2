@@ -6,10 +6,11 @@
     tools:context=".Fragment.ChuDe_TheLoai_Fragment_Today">
 
     <RelativeLayout
+        android:layout_marginTop="5dp"
         android:id="@+id/rltChudeTheloai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="7dp">
+        android:padding="6dp">
 
         <TextView
             android:id="@+id/tvTitleCdTheloai"
@@ -21,18 +22,20 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="2dp"
+            android:id="@+id/tvXemthemChude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="2dp"
             android:text="Xem thêm.."
-            android:textColor="#F5380070"
+            android:textColor="#074518"
             android:textSize="18sp"
             android:textStyle="normal" />
     </RelativeLayout>
 
     <HorizontalScrollView
+        android:layout_marginHorizontal="6dp"
         android:scrollbars="none"
         android:id="@+id/horizontalScollView"
         android:layout_width="match_parent"

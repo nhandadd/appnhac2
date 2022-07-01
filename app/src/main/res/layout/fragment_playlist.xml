@@ -17,9 +17,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="TOP 100"
-        android:textColor="#D7FFFFFF"
+        android:textColor="#CFF8D0"
         android:textSize="30sp" />
     <ListView
+        android:paddingHorizontal="5dp"
         android:id="@+id/listviewPlaylist"
         android:layout_below="@+id/tvTitlePlaylist"
         android:layout_width="match_parent"

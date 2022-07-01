@@ -1,6 +1,7 @@
 package com.example.appnhachay.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,15 +35,14 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist> {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             convertView = layoutInflater.inflate(R.layout.dong_playlist,null);
             viewHolder = new ViewHolder();
-            viewHolder.tenPlaylist = convertView.findViewById(R.id.tvTenPlaylist);
-            viewHolder.imgBackgoundPlaylist = convertView.findViewById(R.id.imageBackgoundPlaylist);
-            viewHolder.imgPlaylist = convertView.findViewById(R.id.imagePlaylist);
+            viewHolder.tenPlaylist = convertView.findViewById(R.id.tvPlayList);
+            viewHolder.imgPlaylist = convertView.findViewById(R.id.iconPlaylist);
+            viewHolder.imgBackgoundPlaylist = convertView.findViewById(R.id.backgroundPlaylist);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Playlist playlist = getItem(position);
-        Glide.with(getContext()).load(playlist.getHinhPlaylist()).into(viewHolder.imgBackgoundPlaylist);
         Glide.with(getContext()).load(playlist.getIcon()).into(viewHolder.imgPlaylist);
         viewHolder.tenPlaylist.setText(playlist.getTen());
         return convertView;

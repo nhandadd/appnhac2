@@ -10,13 +10,13 @@
             android:id="@+id/viewPager2"
             android:layout_width="match_parent"
             android:layout_height="225dp"
-            android:background="#9EDFA0">
+            android:background="#BDE8BF">
 
         </androidx.viewpager.widget.ViewPager>
         <View
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/viewPager2"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="8dp"
             android:background="@drawable/custom_bg_vien_quangcao">
         </View>
         <me.relex.circleindicator.CircleIndicator

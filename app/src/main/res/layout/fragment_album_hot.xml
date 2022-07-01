@@ -11,10 +11,10 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_marginStart="7dp"
             android:id="@+id/tvTitleAlbum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
             android:text="ALBUM HOT"
             android:textColor="#1E0033"
             android:textSize="20sp"
@@ -26,15 +26,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="7dp"
             android:text="Xem thêm.."
-            android:textColor="#F5380070"
+            android:textColor="#074518"
             android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:id="@+id/rcvAlbum"
+            android:layout_marginHorizontal="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTitleAlbum" />

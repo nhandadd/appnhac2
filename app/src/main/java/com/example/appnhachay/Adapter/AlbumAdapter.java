@@ -1,6 +1,8 @@
 package com.example.appnhachay.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.appnhachay.Activity.DanhsachBaihatActivity;
 import com.example.appnhachay.Model.Album;
 import com.example.appnhachay.R;
 
@@ -54,6 +57,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
             imageAlbum = itemView.findViewById(R.id.imageAlbum);
             tvTenAlbum = itemView.findViewById(R.id.tvTenAlbum);
             tvCasiAlum = itemView.findViewById(R.id.tvTenCasiAlbum);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DanhsachBaihatActivity.class);
+                    intent.putExtra("idalbum", albumArrayList.get(getPosition()));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
