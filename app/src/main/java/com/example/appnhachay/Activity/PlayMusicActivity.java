@@ -43,13 +43,8 @@ public class PlayMusicActivity extends AppCompatActivity {
     DanhsachPlayMusicFragment fragment_danhsachplay;
     public static PagerPlayNhacAdapter pagerPlayNhacAdapter;
     LinearLayout layoutLoading;
-    int position = 0;
-    int positionRandom = 0;
-    boolean repeat = false;
-    boolean nextActivy = false;
-    boolean checkRandom = false;
     private MyService myService;
-    private boolean isServiceConnected;
+    boolean isServiceConnected;
     String ten,hinhanh, baihat, casi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,19 +60,20 @@ public class PlayMusicActivity extends AppCompatActivity {
         baihat = baihatArrayList.get(0).getLinkBaihat();
         evenClick();
 
-        Handler handler11 = new Handler();
-        handler11.postDelayed(new Runnable() {
+        Handler handlerUpdate = new Handler();
+        handlerUpdate.postDelayed(new Runnable() {
             @Override
             public void run() {
-                        setStatusIButPlay();
-                        UpdateTimeDemo();
-                        handler11.postDelayed(this, 1000);
+                TimeSong((int) myService.getDuration());
+                UpdateTimeDemo(currentTime);
+                setStatusIButPlay();
+                handlerUpdate.postDelayed(this, 1000);
             }
         }, 1000);
     }
     private void evenClick() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        final Handler handlerStartService = new Handler();
+        handlerStartService.postDelayed(new Runnable() {
             @Override
             public void run() {
                     if (baihatArrayList.size() > 0){
@@ -90,11 +86,10 @@ public class PlayMusicActivity extends AppCompatActivity {
                         bindService(intentStart, connection, Context.BIND_AUTO_CREATE);
 
                         getSupportActionBar().setTitle(baihatArrayList.get(0).getTenBaihat());
-                        fragment_dianhac.PlayNhac(baihatArrayList.get(position).getHinhBahat());
-                        TimeSong((int) myService.getDuration());
-                        handler.removeCallbacks(this);
+                        fragment_dianhac.PlayNhac(baihatArrayList.get(0).getHinhBahat());
+                        handlerStartService.removeCallbacks(this);
                     }else {
-                        handler.postDelayed(this, 400);
+                        handlerStartService.postDelayed(this, 400);
                     }
 
             }
@@ -113,26 +108,16 @@ public class PlayMusicActivity extends AppCompatActivity {
         iButRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (repeat == false){
-//                    if (checkRandom == true){
-//                        checkRandom = false;
-//                    }
-//                    repeat = true;
-//                    iButRepeat.setImageResource(R.drawable.iconsyned);
-//                    iButRandom.setImageResource(R.drawable.iconsuffle);
-//                }else {
-//                    repeat = false;
-//                    iButRepeat.setImageResource(R.drawable.iconrepeat);
-//                }
+
                 if (myService.isRepeat() == false){
                     if (myService.isRandom() == true){
-                        myService.setKeyStatusFalse(myService.isRandom());
+                        myService.serviceHandler.setFalseRandom();
                     }
-                    myService.setKeyStatusTrue(myService.isRepeat());
+                    myService.serviceHandler.setTrueRepeat();
                     iButRepeat.setImageResource(R.drawable.iconsyned);
                     iButRandom.setImageResource(R.drawable.iconsuffle);
                 }else {
-                    myService.setKeyStatusFalse(myService.isRepeat());
+                    myService.serviceHandler.setFalseRepeat();
                     iButRepeat.setImageResource(R.drawable.iconrepeat);
                 }
             }
@@ -140,15 +125,16 @@ public class PlayMusicActivity extends AppCompatActivity {
         iButRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (myService.isRandom() == false){
                     if (myService.isRepeat() == true){
-                       myService.setKeyStatusFalse(myService.isRepeat());
+                       myService.serviceHandler.setFalseRepeat();
                     }
-                    myService.setKeyStatusTrue(myService.isRandom());
+                    myService.serviceHandler.setTrueRandom();
                     iButRandom.setImageResource(R.drawable.iconshuffled);
                     iButRepeat.setImageResource(R.drawable.iconrepeat);
                 }else {
-                    myService.setKeyStatusFalse(myService.isRandom());
+                    myService.serviceHandler.setFalseRandom();
                     iButRandom.setImageResource(R.drawable.iconsuffle);
                 }
             }
@@ -169,10 +155,11 @@ public class PlayMusicActivity extends AppCompatActivity {
         iButNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myService.serviceHandler.nextMp3(baihatArrayList);
-
-                getSupportActionBar().setTitle(baihatArrayList.get(position).getTenBaihat());
-                fragment_dianhac.PlayNhac(baihatArrayList.get(position).getHinhBahat());
+                if (myService.getMediaPlayer() != null){
+                    myService.serviceHandler.nextMp3(baihatArrayList);
+                }
+                getSupportActionBar().setTitle(baihatArrayList.get(myService.getmPosition()).getTenBaihat());
+                fragment_dianhac.PlayNhac(baihatArrayList.get(myService.getmPosition()).getHinhBahat());
                 iButPre.setClickable(false);
                 iButNext.setClickable(false);
                 Handler handler1 = new Handler();
@@ -188,9 +175,11 @@ public class PlayMusicActivity extends AppCompatActivity {
         iButPre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myService.serviceHandler.preMp3(baihatArrayList);
-
-                fragment_dianhac.PlayNhac(baihatArrayList.get(position).getHinhBahat());
+                if (myService.getMediaPlayer() != null){
+                    myService.serviceHandler.preMp3(baihatArrayList);
+                }
+                getSupportActionBar().setTitle(baihatArrayList.get(myService.getmPosition()).getTenBaihat());
+                fragment_dianhac.PlayNhac(baihatArrayList.get(myService.getmPosition()).getHinhBahat());
                 iButPre.setClickable(false);
                 iButNext.setClickable(false);
                 Handler handler1 = new Handler();
@@ -248,83 +237,26 @@ public class PlayMusicActivity extends AppCompatActivity {
             pagerPlayNhacAdapter.AddFragmet(fragment_danhsachplay);
             pagerPlayNhacAdapter.AddFragmet(fragment_dianhac);
             viewPagerPlayMusic.setAdapter(pagerPlayNhacAdapter);
-            if (baihatArrayList.size() > 0) {
-                Intent intent = new Intent(PlayMusicActivity.this, MyService.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("baihatplay", baihatArrayList);
-                intent.putExtras(bundle);
-                startService(intent);
-                bindService(intent, connection, Context.BIND_AUTO_CREATE);
-                fragment_dianhac.PlayNhac(baihatArrayList.get(0).getHinhBahat());
-            }
+//            if (baihatArrayList.size() > 0) {
+//                Intent intent = new Intent(PlayMusicActivity.this, MyService.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("baihatplay", baihatArrayList);
+//                intent.putExtras(bundle);
+//                startService(intent);
+//                bindService(intent, connection, Context.BIND_AUTO_CREATE);
+//                fragment_dianhac.PlayNhac(baihatArrayList.get(position).getHinhBahat());
+//            }
     }
 
     private void TimeSong(int duration) {
-        Log.d("BBB","duration Timesong " + duration);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
         tvTotalTimeSong.setText(simpleDateFormat.format(duration));
         seekBarPlay.setMax(duration);
     }
-    private void UpdateTimeDemo(){
-        seekBarPlay.setProgress(currentTime);
+    private void UpdateTimeDemo(int timePlay){
+        seekBarPlay.setProgress(timePlay);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-        tvTimeSong.setText(simpleDateFormat.format(currentTime));
-    }
-    private void UpdateTiwme(){
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                    seekBarPlay.setProgress(currentTime);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-                    tvTimeSong.setText(simpleDateFormat.format(currentTime));
-                    handler.postDelayed(this,300);
-            }
-        },400);
-
-        final Handler handler1 = new Handler();
-        handler1.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (myService.isNext()){
-                    if (position < baihatArrayList.size()) {
-                        iButPlay.setImageResource(R.drawable.ic_pause);
-                        position++;
-                        if (repeat == true) {
-                            if (position == 0) {
-                                position = baihatArrayList.size();
-                            }
-                            position -= 1;
-                        }
-                        if (checkRandom == true) {
-                            Random random = new Random();
-                            positionRandom = position;
-                            int index = random.nextInt(baihatArrayList.size());
-                            if (index == positionRandom) {
-                                position = positionRandom + 1;
-                            }
-                        }
-                        if (position > (baihatArrayList.size() - 1) ){
-                            position = 0;
-                        }
-                        getSupportActionBar().setTitle(baihatArrayList.get(position).getTenBaihat());
-                        myService.serviceHandler.startMp3(baihatArrayList);
-                        fragment_dianhac.PlayNhac(baihatArrayList.get(position).getHinhBahat());
-                    }
-                iButPre.setClickable(false); iButNext.setClickable(false);
-                Handler handler1 = new Handler();
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        iButPre.setClickable(true);   iButNext.setClickable(true);
-                    }
-                },3000);
-                handler1.removeCallbacks(this);
-                }else {
-                    handler1.postDelayed(this, 1000);
-                }
-            }
-        },1000);
+        tvTimeSong.setText(simpleDateFormat.format(timePlay));
     }
 
     @Override
@@ -360,7 +292,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         }
     }
     private void StopService(){
-        if (myService.isStopService()){
+        if (myService.isStopService() == true){
             myService.stopSelf();
         }
     }

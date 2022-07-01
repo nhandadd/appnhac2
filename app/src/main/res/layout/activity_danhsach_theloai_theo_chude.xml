@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginHorizontal="10dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         android:id="@+id/rcvDsTltheoCd"

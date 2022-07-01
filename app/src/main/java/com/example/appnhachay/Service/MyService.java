@@ -29,8 +29,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MyService extends Service {
-      private ArrayList<Baihat>  baihatArrayList;
-      private String ten,hinhanh, baihat, casi;
+       private ArrayList<Baihat>  baihats = null;
       private Looper serviceLooper;
       public ServiceHandler serviceHandler;
       private NotificationManager notificationManager;
@@ -38,11 +37,13 @@ public class MyService extends Service {
       private int RESUME_MUSIC_CODE = 0;
       private int PAUSE_MUSIC_CODE = 1;
       private int CLEAR_MUSIC_CODE = 2;
+      private int PRE_MUSIC_CODE = 3;
+      private int NEXT_MUSIC_CODE = 4;
 
       private boolean stopService = false;
-      boolean repeat = false;
-      boolean random = false;
-      int position = 0;
+      private boolean repeat = false;
+      private boolean random = false;
+     private int mPosition = 0;
       int positionRandom = 0;
       private OnListenDuration onListenDuration;
       private long duration = 0;
@@ -52,21 +53,27 @@ public class MyService extends Service {
     public class ServiceHandler extends Handler {
         private int currentTime = 0;
         private Handler handler;
-
+        String ten,hinhanh, baihat, casi;
       public ServiceHandler(Looper looper) {
             super(looper);
         }
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
-          ArrayList<Baihat> baihats = (ArrayList<Baihat>) bundle.get("baihatstart");
-            ten = baihats.get(0).getTenBaihat();
-            casi = baihats.get(0).getCasi();
-            hinhanh = baihats.get(0).getHinhBahat();
-            baihat = baihats.get(0).getLinkBaihat();
+           ArrayList<Baihat> baihats1 = (ArrayList<Baihat>) bundle.get("baihatstart");
+             if (baihats1 != null){
+              baihats = baihats1;
+            }
+            if (baihats1!= null){
+                ten = baihats1.get(0).getTenBaihat();
+                casi = baihats1.get(0).getCasi();
+                hinhanh = baihats1.get(0).getHinhBahat();
+                baihat = baihats1.get(0).getLinkBaihat();
+            }
+            Log.d("BBB","action " +msg.what);
             switch (msg.what) {
                 case -1:
-                    startMp3(baihats);
+                    startMp3(baihats,0);
                     break;
                 case 0:
                     resumeMp3(baihats);
@@ -75,16 +82,34 @@ public class MyService extends Service {
                     pauseMp3(baihats);
                     break;
                 case 2:
-                    stopService = true;
+                    stopSelf();
+                    break;
+                case 3:
+                    preMp3(baihats);
+                    break;
+                case 4:
+                    nextMp3(baihats);
                     break;
             }
+        }
+        public void setFalseRepeat(){
+            repeat = false;
+        }
+        public void setTrueRepeat(){
+            repeat = true;
+        }
+        public void setFalseRandom(){
+            random = false;
+        }
+        public void setTrueRandom(){
+            random = true;
         }
         private void disableUpdateTime() {
             if (mediaPlayer != null && mediaPlayer.isPlaying()){
                 handler.removeCallbacks(runnableTime);
             }
         }
-        private void updateCurrentTime(){
+        private void getUpdateCurrentTime(){
             if (mediaPlayer != null) {
                 if (isPlaying) {
                     handler = new Handler();
@@ -95,13 +120,16 @@ public class MyService extends Service {
         private Runnable runnableTime = new Runnable() {
             @Override
             public void run() {
-                if (mediaPlayer.isPlaying() && mediaPlayer.getCurrentPosition() < mediaPlayer.getDuration()) {
+                if (mediaPlayer != null){
+                    if (mediaPlayer.isPlaying() && mediaPlayer.getCurrentPosition() < mediaPlayer.getDuration()) {
 
-                    onListenDuration.onCurrentDuration(mediaPlayer.getCurrentPosition());
+                        onListenDuration.onCurrentDuration(mediaPlayer.getCurrentPosition());
+                    }
+                    if (isPlaying){
+                        handler.postDelayed(this,500);
+                    }
                 }
-                if (isPlaying){
-                    handler.postDelayed(this,500);
-                }
+
             }
         };
         public void pauseMp3(ArrayList<Baihat> baihats) {
@@ -109,7 +137,7 @@ public class MyService extends Service {
                 currentTime = mediaPlayer.getCurrentPosition();
                 mediaPlayer.pause();
                 isPlaying = false;
-                notificationManager.notify(1, makeNotification(baihats,false));
+                notificationManager.notify(1, makeNotification(baihats,mPosition,isPlaying));
             }
         }
         public void resumeMp3(ArrayList<Baihat> baihats) {
@@ -117,198 +145,88 @@ public class MyService extends Service {
                 isPlaying = true;
                 mediaPlayer.seekTo(currentTime);
                 mediaPlayer.start();
+                getUpdateCurrentTime();
                 AutoPlayNext(baihats);
-                notificationManager.notify(1, makeNotification(baihats,true));
+                notificationManager.notify(1, makeNotification(baihats,mPosition,isPlaying));
             }
         }
         public void preMp3(ArrayList<Baihat> baihats) {
-            if (baihatArrayList.size() > 0) {
+            if (baihats.size() > 0) {
                 if (mediaPlayer.isPlaying() || mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
-                if (position < baihatArrayList.size()) {
-                    position--;
+                if (mPosition < baihats.size()) {
+                    mPosition--;
 
                     if (repeat == true) {
-                        position += 1;
+                        mPosition += 1;
                     }
                     if (random == true) {
                         Random random = new Random();
-                        positionRandom = position;
-                        int index = random.nextInt(baihatArrayList.size());
+                        positionRandom = mPosition;
+                        int index = random.nextInt(baihats.size());
                         if (index == positionRandom) {
-                            position = positionRandom - 1;
+                            mPosition = positionRandom - 1;
                         }
                     }
-                    if (position < 0){
-                        position = baihatArrayList.size() - 1;
+                    if (mPosition < 0){
+                        mPosition = baihats.size() - 1;
                     }
-                }  startMp3(baihatArrayList);
+                }  startMp3(baihats,mPosition);
+                getUpdateCurrentTime();
             }
         }
         public void nextMp3(ArrayList<Baihat> baihats){
-            if (baihatArrayList.size() > 0) {
-                if (mediaPlayer.isPlaying() || mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-                if (position < baihatArrayList.size()) {
-                    position++;
-                    if (repeat == true) {
-                        if (position == 0) {
-                            position = baihatArrayList.size();
-                        }
-                        position -= 1;
+            if (baihats.size() > 0) {
+                    if (mediaPlayer.isPlaying() || mediaPlayer != null) {
+                        mediaPlayer.stop();
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                        if (mPosition < baihats.size()) {
+                            mPosition++;
+                            if (repeat == true) {
+                                if (mPosition == 0) {
+                                    mPosition = baihats.size();
+                                }
+                                mPosition -= 1;
+                            }
+                            if (random == true) {
+                                Random random = new Random();
+                                positionRandom = mPosition;
+                                int index = random.nextInt(baihats.size());
+                                if (index == positionRandom) {
+                                    mPosition = positionRandom + 1;
+                                }
+                            }
+                            if (mPosition > (baihats.size() - 1) ){
+                                mPosition = 0;
+                            }
+                        } startMp3(baihats,mPosition);
+                        getUpdateCurrentTime();
                     }
-                    if (random == true) {
-                        Random random = new Random();
-                        positionRandom = position;
-                        int index = random.nextInt(baihatArrayList.size());
-                        if (index == positionRandom) {
-                            position = positionRandom + 1;
-                        }
-                    }
-                    if (position > (baihatArrayList.size() - 1) ){
-                        position = 0;
-                    }
-                } startMp3(baihatArrayList);
             }
         }
-        public void startMp3(ArrayList<Baihat> baihats) {
+        public void startMp3(ArrayList<Baihat> baihats, int position) {
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = null;
             }
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(baihats.get(0).getLinkBaihat()));
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(baihats.get(position).getLinkBaihat()));
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
-                  notificationManager.notify(1, makeNotification(baihats,true));
-                    isPlaying = true;
                     mediaPlayer.start();
+                    isPlaying = true;
+                    notificationManager.notify(1, makeNotification(baihats,position,isPlaying));
                     duration = mediaPlayer.getDuration();
                    AutoPlayNext(baihats);
+                   getUpdateCurrentTime();
                 }
             });
         }
-    }
-    public class MyBound extends Binder {
-       public MyService getService() {
-            return MyService.this;
-        }
-    }
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        serviceHandler.updateCurrentTime();
-        Log.d("BBB"," onBind");
-        return new MyBound();
-    }
-    @Override
-    public boolean onUnbind(Intent intent) {
-        serviceHandler.disableUpdateTime();
-        Log.d("BBB"," onUnbind");
-        return super.onUnbind(intent);
-    }
-    @Override
-    public void onRebind(Intent intent) {
-        stopService = false;
-        serviceHandler.updateCurrentTime();
-        Log.d("BBB"," onRebind");
-        super.onRebind(intent);
-    }
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
-        thread.start();
-        Log.d("BBB"," onCreate");
-        // Get the HandlerThread's Looper and use it for our Handler
-        serviceLooper = thread.getLooper();
-        serviceHandler = new ServiceHandler(serviceLooper);
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//         start foreground
-        baihatArrayList.add()
-        startForeground(1, makeNotification(baihatArrayList, isPlaying));
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("BBB"," onStartCommand");
-        Bundle bundle = intent.getExtras();
-        baihatArrayList = (ArrayList<Baihat>) bundle.getSerializable("baihatplay");
-        int requestCode = intent.getIntExtra("requestCode", -1);
-        Message msg = serviceHandler.obtainMessage();
-        stopService = false;
-
-        switch (requestCode) {
-            case -1:
-               bundle.putSerializable("baihatstart",baihatArrayList);
-                msg.what = -1;
-                msg.setData(bundle);
-                serviceHandler.sendMessage(msg);
-                break;
-            case 0:
-                msg.setData(bundle);
-                msg.what = 0;
-                serviceHandler.sendMessage(msg);
-                break;
-            case 1:
-                msg.setData(bundle);
-                msg.what = 1;
-                serviceHandler.sendMessage(msg);
-                break;
-            case 2:
-                msg.setData(bundle);
-                msg.what = 2;
-                serviceHandler.sendMessage(msg);
-                break;
-        }
-        return START_NOT_STICKY;
-    }
-    public Notification makeNotification(ArrayList<Baihat> baihats, boolean isPlaying) {
-        Intent intentMusic = new Intent(this, MyService.class);
-
-        int action = -1;
-        intentMusic.putExtra("requestCode", action );
-
-        PendingIntent pendingIntent = PendingIntent.getService(
-                this,
-                0,
-                intentMusic,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification);
-        remoteViews.setTextViewText(R.id.tvBaihatSv,baihats.get(0).getTenBaihat());
-        remoteViews.setTextViewText(R.id.tvCasiSv,baihats.get(0).getCasi());
-//        remoteViews.setImageViewUri(R.id.imageBaihatSv, Uri.parse(hinhanh));
-
-        remoteViews.setImageViewResource(R.id.imagePlayorPause,R.drawable.ic_pause);
-        remoteViews.setImageViewResource(R.id.imageClear,R.drawable.ic_clear);
-        if (isPlaying){
-            remoteViews.setOnClickPendingIntent(R.id.imagePlayorPause,getPendingIntent(this,PAUSE_MUSIC_CODE));
-            remoteViews.setImageViewResource(R.id.imagePlayorPause,R.drawable.ic_pause);
-            remoteViews.setOnClickPendingIntent(R.id.imageClear,getPendingIntent(this,CLEAR_MUSIC_CODE));
-        }else {
-            remoteViews.setOnClickPendingIntent(R.id.imagePlayorPause,getPendingIntent(this,RESUME_MUSIC_CODE));
-            remoteViews.setImageViewResource(R.id.imagePlayorPause,R.drawable.iconplay);
-            remoteViews.setOnClickPendingIntent(R.id.imageClear,getPendingIntent(this,CLEAR_MUSIC_CODE));
-        }
-        remoteViews.setOnClickPendingIntent(R.id.imageClear,getPendingIntent(this,CLEAR_MUSIC_CODE));
-
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setWhen(System.currentTimeMillis())
-                .setSound(null)
-                .setContentIntent(pendingIntent)
-                .setCustomContentView(remoteViews);
-        startForeground(1, notification.build());
-        return notification.build();
-    }
         private void AutoPlayNext(ArrayList<Baihat> baihats){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -335,26 +253,26 @@ public class MyService extends Service {
                 @Override
                 public void run() {
                     if (next == true){
-                        if (position < baihatArrayList.size()) {
-                            position++;
+                        if (mPosition < baihats.size()) {
+                            mPosition++;
                             if (repeat == true) {
-                                if (position == 0) {
-                                    position = baihatArrayList.size();
+                                if (mPosition == 0) {
+                                    mPosition = baihats.size();
                                 }
-                                position -= 1;
+                                mPosition -= 1;
                             }
                             if (random == true) {
                                 Random random = new Random();
-                                positionRandom = position;
-                                int index = random.nextInt(baihatArrayList.size());
+                                positionRandom = mPosition;
+                                int index = random.nextInt(baihats.size());
                                 if (index == positionRandom) {
-                                    position = positionRandom + 1;
+                                    mPosition = positionRandom + 1;
                                 }
                             }
-                            if (position > (baihatArrayList.size() - 1) ){
-                                position = 0;
+                            if (mPosition > (baihats.size() - 1) ){
+                                mPosition = 0;
                             }
-                            serviceHandler.startMp3(baihats);
+                            serviceHandler.startMp3(baihats,mPosition);
                         }
                         next = false;
                         handler1.removeCallbacks(this);
@@ -364,6 +282,126 @@ public class MyService extends Service {
                 }
             },1000);
         }
+    }
+    public class MyBound extends Binder {
+       public MyService getService() {
+            return MyService.this;
+        }
+    }
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        Log.d("BBB"," onBind");
+        return new MyBound();
+    }
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.d("BBB"," onUnbind");
+        return super.onUnbind(intent);
+    }
+    @Override
+    public void onRebind(Intent intent) {
+        stopService = false;
+        Log.d("BBB"," onRebind");
+        super.onRebind(intent);
+    }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
+        thread.start();
+        Log.d("BBB"," onCreate");
+        serviceLooper = thread.getLooper();
+        serviceHandler = new ServiceHandler(serviceLooper);
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("BBB"," onStartCommand");
+        Bundle bundle = intent.getExtras();
+         ArrayList<Baihat>  baihatArrayList = (ArrayList<Baihat>) bundle.getSerializable("baihatplay");
+        int requestCode = intent.getIntExtra("requestCode", -1);
+        Message msg = serviceHandler.obtainMessage();
+        stopService = false;
+
+        switch (requestCode) {
+            case -1:
+               bundle.putSerializable("baihatstart",baihatArrayList);
+                msg.what = -1;
+                msg.setData(bundle);
+                serviceHandler.sendMessage(msg);
+                break;
+            case 0:
+                bundle.putSerializable("baihatstart",baihatArrayList);
+                msg.setData(bundle);
+                msg.what = 0;
+                serviceHandler.sendMessage(msg);
+                break;
+            case 1:
+                bundle.putSerializable("baihatstart",baihatArrayList);
+                msg.setData(bundle);
+                msg.what = 1;
+                serviceHandler.sendMessage(msg);
+                break;
+            case 2:
+                msg.setData(bundle);
+                msg.what = 2;
+                serviceHandler.sendMessage(msg);
+                break;
+            case 3:
+                msg.setData(bundle);
+                msg.what = 3;
+                serviceHandler.sendMessage(msg);
+                break;
+            case 4:
+                msg.setData(bundle);
+                msg.what = 4;
+                serviceHandler.sendMessage(msg);
+                break;
+        }
+        return START_NOT_STICKY;
+    }
+    public Notification makeNotification(ArrayList<Baihat> baihats,int position, boolean isPlaying) {
+        Intent intentMusic = new Intent(this, MyService.class);
+
+        int action = -1;
+        intentMusic.putExtra("requestCode", action );
+
+        PendingIntent pendingIntent = PendingIntent.getService(
+                this,
+                0,
+                intentMusic,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification);
+        remoteViews.setTextViewText(R.id.tvBaihatSv,baihats.get(position).getTenBaihat());
+        remoteViews.setTextViewText(R.id.tvCasiSv,baihats.get(position).getCasi());
+//        remoteViews.setImageViewUri(R.id.imageBaihatSv, Uri.parse(hinhanh));
+
+        remoteViews.setImageViewResource(R.id.imagePlayorPause,R.drawable.ic_pause);
+        remoteViews.setImageViewResource(R.id.imageClear,R.drawable.ic_clear);
+        if (isPlaying){
+            remoteViews.setOnClickPendingIntent(R.id.imagePlayorPause,getPendingIntent(this,PAUSE_MUSIC_CODE));
+            remoteViews.setImageViewResource(R.id.imagePlayorPause,R.drawable.ic_pause);
+        }else {
+            remoteViews.setOnClickPendingIntent(R.id.imagePlayorPause,getPendingIntent(this,RESUME_MUSIC_CODE));
+            remoteViews.setImageViewResource(R.id.imagePlayorPause,R.drawable.iconplay);
+        }
+        remoteViews.setOnClickPendingIntent(R.id.imageClear,getPendingIntent(this,CLEAR_MUSIC_CODE));
+        remoteViews.setOnClickPendingIntent(R.id.imagePre,getPendingIntent(this,PRE_MUSIC_CODE));
+        remoteViews.setOnClickPendingIntent(R.id.imageClear,getPendingIntent(this,NEXT_MUSIC_CODE));
+
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setWhen(System.currentTimeMillis())
+                .setSound(null)
+                .setContentIntent(pendingIntent)
+                .setCustomContentView(remoteViews);
+        startForeground(1, notification.build());
+        return notification.build();
+    }
+
     private PendingIntent getPendingIntent(Context context, int action) {
         Intent intent = new Intent(context, MyService.class);
         intent.putExtra("requestCode", action);
@@ -392,9 +430,6 @@ public class MyService extends Service {
         return isPlaying;
     }
 
-    public boolean isNext() {
-        return next;
-    }
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
@@ -411,13 +446,8 @@ public class MyService extends Service {
         return random;
     }
 
-    public boolean setKeyStatusFalse(boolean keyStatus){
-        keyStatus = false;
-        return keyStatus;
-    }
-    public boolean setKeyStatusTrue(boolean keyStatus){
-        keyStatus = true;
-        return keyStatus;
+    public int getmPosition() {
+        return mPosition;
     }
 }
 
