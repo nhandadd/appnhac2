@@ -54,7 +54,6 @@ public class BaihatHotAdapter extends  RecyclerView.Adapter<BaihatHotAdapter.Vie
     public int getItemCount() {
         return baihatArrayList.size();
     }
-
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTenBaiHot, tvTenCasiHot;
         ImageView imgBaihathot, imgLuotthich;

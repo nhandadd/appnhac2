@@ -54,7 +54,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         initView();
         getDataIntent();
         evenClick();
-
         Handler handlerUpdate = new Handler();
         handlerUpdate.postDelayed(new Runnable() {
             @Override
@@ -62,7 +61,10 @@ public class PlayMusicActivity extends AppCompatActivity {
                 TimeSong((int) myService.getDuration());
                 UpdateTimeDemo(currentTime);
                 setStatusIButPlay();
-
+                //test
+                StopService();
+                getSupportActionBar().setTitle(baihatArrayList.get(myService.getmPosition()).getTenBaihat());
+                fragment_dianhac.PlayNhac(baihatArrayList.get(myService.getmPosition()).getHinhBahat());
                 handlerUpdate.postDelayed(this, 1000);
             }
         }, 1000);
@@ -248,7 +250,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        StopService();
         super.onDestroy();
     }
     public ServiceConnection connection = new ServiceConnection() {

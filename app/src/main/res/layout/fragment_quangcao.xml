@@ -10,7 +10,7 @@
             android:id="@+id/viewPager2"
             android:layout_width="match_parent"
             android:layout_height="225dp"
-            android:background="#BDE8BF">
+            android:background="@drawable/custom_bg_notification">
 
         </androidx.viewpager.widget.ViewPager>
         <View
@@ -24,7 +24,8 @@
             android:layout_alignParentRight="true"
             android:id="@+id/indicatorDefalt"
             android:layout_width="wrap_content"
-            android:layout_height="13dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="2dp"
             android:layout_marginTop="10dp">
         </me.relex.circleindicator.CircleIndicator>
 

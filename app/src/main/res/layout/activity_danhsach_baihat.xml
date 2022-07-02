@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/coordinatorLayout"
-    android:background="#EAF1EB"
+    android:background="#DAEDDC"
     tools:context=".Activity.DanhsachBaihatActivity">
 
     <com.google.android.material.appbar.AppBarLayout

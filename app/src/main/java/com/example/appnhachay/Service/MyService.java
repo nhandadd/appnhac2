@@ -22,6 +22,7 @@ import android.widget.RemoteViews;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.appnhachay.Activity.PlayMusicActivity;
 import com.example.appnhachay.Fragment.DianhacFragment;
 import com.example.appnhachay.Model.Baihat;
 import com.example.appnhachay.R;
@@ -52,7 +53,6 @@ public class MyService extends Service {
       boolean next = false;
 
     public class ServiceHandler extends Handler {
-        DianhacFragment dianhacFragment;
         private int currentTime = 0;
         private Handler handler;
         String ten,hinhanh, baihat, casi;
@@ -61,6 +61,7 @@ public class MyService extends Service {
         }
         @Override
         public void handleMessage(Message msg) {
+          if (stopService == false){
             Bundle bundle = msg.getData();
            ArrayList<Baihat> baihats1 = (ArrayList<Baihat>) bundle.get("baihatstart");
              if (baihats1 != null){
@@ -84,7 +85,7 @@ public class MyService extends Service {
                     pauseMp3(baihats);
                     break;
                 case 2:
-                    stopSelf();
+                    stopService = true;
                     break;
                 case 3:
                     preMp3(baihats);
@@ -93,6 +94,7 @@ public class MyService extends Service {
                     nextMp3(baihats);
                     break;
             }
+          }
         }
         public void setFalseRepeat(){
             repeat = false;
@@ -106,11 +108,7 @@ public class MyService extends Service {
         public void setTrueRandom(){
             random = true;
         }
-        private void disableUpdateTime() {
-            if (mediaPlayer != null && mediaPlayer.isPlaying()){
-                handler.removeCallbacks(runnableTime);
-            }
-        }
+
         private void getUpdateCurrentTime(){
             if (mediaPlayer != null) {
                 if (isPlaying) {
@@ -177,9 +175,7 @@ public class MyService extends Service {
                         mPosition = baihats.size() - 1;
                     }
                 }
-//                serviceHandler.dianhacFragment.PlayNhac(baihats.get(mPosition).getHinhBahat());
                 serviceHandler.startMp3(baihats,mPosition);
-
                 getUpdateCurrentTime();
             }
         }
@@ -209,7 +205,6 @@ public class MyService extends Service {
                                 mPosition = 0;
                             }
                         }
-//                        serviceHandler.dianhacFragment.PlayNhac(baihats.get(mPosition).getHinhBahat());
                         serviceHandler.startMp3(baihats,mPosition);
                         getUpdateCurrentTime();
                     }
@@ -280,7 +275,6 @@ public class MyService extends Service {
                                 mPosition = 0;
                             }
                             serviceHandler.startMp3(baihats,mPosition);
-                            dianhacFragment.PlayNhac(baihats.get(mPosition).getHinhBahat());
                         }
                         next = false;
                         handler1.removeCallbacks(this);
@@ -326,6 +320,7 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        stopService = false;
         Log.d("BBB"," onStartCommand");
         Bundle bundle = intent.getExtras();
          ArrayList<Baihat>  baihatArrayList = (ArrayList<Baihat>) bundle.getSerializable("baihatplay");
@@ -375,17 +370,16 @@ public class MyService extends Service {
 
         int action = -1;
         intentMusic.putExtra("requestCode", action );
-
         PendingIntent pendingIntent = PendingIntent.getService(
                 this,
                 0,
                 intentMusic,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
+
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification);
         remoteViews.setTextViewText(R.id.tvBaihatSv,baihats.get(position).getTenBaihat());
         remoteViews.setTextViewText(R.id.tvCasiSv,baihats.get(position).getCasi());
-//        remoteViews.setImageViewUri(R.id.imageBaihatSv, Uri.parse(hinhanh));
 
         remoteViews.setImageViewResource(R.id.imagePlayorPause,R.drawable.ic_pause);
         remoteViews.setImageViewResource(R.id.imageClear,R.drawable.ic_clear);
