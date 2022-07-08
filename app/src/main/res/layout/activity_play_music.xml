@@ -8,7 +8,6 @@
     android:background="@drawable/custom_bg_appnhac"
     android:orientation="vertical"
     tools:context=".Activity.PlayMusicActivity">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarPlayMucic"
         android:layout_width="match_parent"

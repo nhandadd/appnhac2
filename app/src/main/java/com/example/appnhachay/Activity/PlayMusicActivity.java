@@ -61,8 +61,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 TimeSong((int) myService.getDuration());
                 UpdateTimeDemo(currentTime);
                 setStatusIButPlay();
-                //test
-                StopService();
+
                 getSupportActionBar().setTitle(baihatArrayList.get(myService.getmPosition()).getTenBaihat());
                 fragment_dianhac.PlayNhac(baihatArrayList.get(myService.getmPosition()).getHinhBahat());
                 handlerUpdate.postDelayed(this, 1000);
@@ -279,9 +278,5 @@ public class PlayMusicActivity extends AppCompatActivity {
             iButPlay.setImageResource(R.drawable.iconplay);
         }
     }
-    private void StopService(){
-        if (myService.isStopService() == true){
-            myService.stopSelf();
-        }
-    }
+
 }

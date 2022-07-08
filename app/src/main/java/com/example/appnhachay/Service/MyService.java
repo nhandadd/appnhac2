@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -55,7 +56,6 @@ public class MyService extends Service {
     public class ServiceHandler extends Handler {
         private int currentTime = 0;
         private Handler handler;
-        String ten,hinhanh, baihat, casi;
       public ServiceHandler(Looper looper) {
             super(looper);
         }
@@ -67,13 +67,6 @@ public class MyService extends Service {
              if (baihats1 != null){
               baihats = baihats1;
             }
-            if (baihats1!= null){
-                ten = baihats1.get(0).getTenBaihat();
-                casi = baihats1.get(0).getCasi();
-                hinhanh = baihats1.get(0).getHinhBahat();
-                baihat = baihats1.get(0).getLinkBaihat();
-            }
-            Log.d("BBB","action " +msg.what);
             switch (msg.what) {
                 case -1:
                     startMp3(baihats,0);
@@ -85,7 +78,14 @@ public class MyService extends Service {
                     pauseMp3(baihats);
                     break;
                 case 2:
-                    stopService = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        stopForeground(STOP_FOREGROUND_REMOVE);
+
+                    }
+                    if (mediaPlayer != null){
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    }
                     break;
                 case 3:
                     preMp3(baihats);
@@ -415,7 +415,8 @@ public class MyService extends Service {
         if (mediaPlayer != null){
             mediaPlayer.release();
             mediaPlayer = null;
-        }  super.onDestroy();
+        }
+        super.onDestroy();
     }
     public void setOnListenDuration(OnListenDuration onListenDuration) {
         this.onListenDuration = onListenDuration;
@@ -434,10 +435,6 @@ public class MyService extends Service {
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
-    }
-
-    public boolean isStopService() {
-        return stopService;
     }
 
     public boolean isRepeat() {
