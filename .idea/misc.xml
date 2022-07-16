@@ -54,10 +54,12 @@
         <entry key="..\:/AppNhacHay/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/drawable-v24/custom_bg_vien_quangcao.xml" value="0.1875" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/drawable/custom_bg_vien_indicator.xml" value="0.1875" />
+        <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/activity_danhsach_album.xml" value="0.25416666666666665" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/activity_danhsach_baihat.xml" value="0.4" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/activity_danhsach_chude.xml" value="0.25416666666666665" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/activity_danhsach_playlist.xml" value="0.25416666666666665" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/activity_danhsach_theloai_theo_chude.xml" value="0.25416666666666665" />
+        <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/activity_play_music.xml" value="0.25416666666666665" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/dong_theloai_theo_chude.xml" value="0.25416666666666665" />
         <entry key="..\:/app nhac hay chinh 2/AppNhacHay/app/src/main/res/layout/fragment_quangcao.xml" value="0.264" />
