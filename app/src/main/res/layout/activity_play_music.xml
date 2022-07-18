@@ -59,54 +59,58 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_marginHorizontal="2dp"
-            android:gravity="center"
+            android:layout_marginStart="5dp"
+            android:paddingHorizontal="10dp"
+            android:weightSum="5"
             android:layout_marginVertical="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_marginRight="15dp"
+                android:layout_weight="1"
                 android:src="@drawable/iconsuffle"
                 android:id="@+id/imageButtonSuffle"
                 android:scaleType="fitXY"
                 android:background="@color/transparent"
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
-            <ImageButton
-            android:layout_marginRight="15dp"
-            android:src="@drawable/iconpreview"
-            android:id="@+id/imageButtonPreview"
-            android:scaleType="fitXY"
-            android:background="@color/transparent"
-            android:layout_width="70dp"
-            android:layout_height="70dp"/>
-            <ImageButton
-                android:layout_marginRight="15dp"
-                android:src="@drawable/iconplay"
-                android:id="@+id/imageButtonPlay"
-                android:scaleType="fitXY"
-                android:background="@color/transparent"
-                android:layout_width="70dp"
-                android:layout_height="70dp"/>
+                android:layout_width="0dp"
+                android:layout_height="60dp"/>
 
             <ImageButton
-                android:layout_marginRight="15dp"
-                android:src="@drawable/iconnext"
-                android:id="@+id/imageButtonNext"
-                android:scaleType="fitXY"
+                android:layout_weight="1"
+                android:id="@+id/imageButtonPreview"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
                 android:background="@color/transparent"
-                android:layout_width="60dp"
-                android:layout_height="60dp"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/iconpreview" />
+
             <ImageButton
-                android:layout_marginRight="15dp"
-                android:src="@drawable/iconrepeat"
-                android:id="@+id/imageButtonRepeat"
-                android:scaleType="fitXY"
+                android:layout_weight="1"
+                android:id="@+id/imageButtonPlay"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
                 android:background="@color/transparent"
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/iconplay" />
+
+            <ImageButton
+                android:layout_weight="1"
+                android:id="@+id/imageButtonNext"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:background="@color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/iconnext" />
+
+            <ImageButton
+                android:layout_weight="1"
+                android:id="@+id/imageButtonRepeat"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:background="@color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/iconrepeat" />
         </LinearLayout>
     </LinearLayout>
     <include
