@@ -40,6 +40,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <SeekBar
+                tools:progress="50"
+                android:thumbTint="#E1D8EA"
+                android:progressTint="#E1D8EA"
                 android:id="@+id/seeBarSong"
                 android:layout_weight="9"
                 android:layout_width="0dp"
@@ -56,6 +59,7 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_marginHorizontal="2dp"
             android:gravity="center"
             android:layout_marginVertical="10dp"
             android:orientation="horizontal"

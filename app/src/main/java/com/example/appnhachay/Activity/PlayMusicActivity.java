@@ -63,7 +63,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 setStatusIButPlay();
 
                 getSupportActionBar().setTitle(baihatArrayList.get(myService.getmPosition()).getTenBaihat());
-                fragment_dianhac.PlayNhac(baihatArrayList.get(myService.getmPosition()).getHinhBahat());
+//                fragment_dianhac.PlayNhac(baihatArrayList.get(myService.getmPosition()).getHinhBahat());
                 handlerUpdate.postDelayed(this, 1000);
             }
         }, 1000);
