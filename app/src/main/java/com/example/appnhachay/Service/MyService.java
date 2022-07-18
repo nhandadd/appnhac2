@@ -169,6 +169,8 @@ public class MyService extends Service {
                         int index = random.nextInt(baihats.size());
                         if (index == positionRandom) {
                             mPosition = positionRandom - 1;
+                        }else {
+                            mPosition = index;
                         }
                     }
                     if (mPosition < 0){
@@ -199,6 +201,8 @@ public class MyService extends Service {
                                 int index = random.nextInt(baihats.size());
                                 if (index == positionRandom) {
                                     mPosition = positionRandom + 1;
+                                }else {
+                                    mPosition = index;
                                 }
                             }
                             if (mPosition > (baihats.size() - 1) ){
@@ -269,6 +273,8 @@ public class MyService extends Service {
                                 int index = random.nextInt(baihats.size());
                                 if (index == positionRandom) {
                                     mPosition = positionRandom + 1;
+                                }else {
+                                    mPosition = index;
                                 }
                             }
                             if (mPosition > (baihats.size() - 1) ){
