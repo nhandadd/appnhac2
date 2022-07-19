@@ -108,6 +108,9 @@ public class MyService extends Service {
         public void setTrueRandom(){
             random = true;
         }
+        public void clearBaihats(){
+            baihats.clear();
+        }
 
         private void getUpdateCurrentTime(){
             if (mediaPlayer != null) {
@@ -326,10 +329,12 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         stopService = false;
         Log.d("BBB"," onStartCommand");
         Bundle bundle = intent.getExtras();
-         ArrayList<Baihat>  baihatArrayList = (ArrayList<Baihat>) bundle.getSerializable("baihatplay");
+        ArrayList<Baihat>  baihatArrayList = null;
+       baihatArrayList = (ArrayList<Baihat>) bundle.getSerializable("baihatplay");
         int requestCode = intent.getIntExtra("requestCode", -1);
         Message msg = serviceHandler.obtainMessage();
         stopService = false;

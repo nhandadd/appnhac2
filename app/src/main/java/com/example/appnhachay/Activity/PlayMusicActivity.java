@@ -61,9 +61,9 @@ public class PlayMusicActivity extends AppCompatActivity {
                 TimeSong((int) myService.getDuration());
                 UpdateTimeDemo(currentTime);
                 setStatusIButPlay();
-
-                getSupportActionBar().setTitle(baihatArrayList.get(myService.getmPosition()).getTenBaihat());
-//                fragment_dianhac.PlayNhac(baihatArrayList.get(myService.getmPosition()).getHinhBahat());
+                if (baihatArrayList.size() > 0){
+                    getSupportActionBar().setTitle(baihatArrayList.get(myService.getmPosition()).getTenBaihat());
+                }
                 handlerUpdate.postDelayed(this, 1000);
             }
         }, 1000);
@@ -224,6 +224,7 @@ public class PlayMusicActivity extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    myService.serviceHandler.clearBaihats();
                     finish();
                 }
             });
@@ -278,5 +279,4 @@ public class PlayMusicActivity extends AppCompatActivity {
             iButPlay.setImageResource(R.drawable.iconplay);
         }
     }
-
 }

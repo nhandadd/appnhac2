@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 //                    tab.setText("Tim Kiem");
             }
         }).attach();
-
-
+       viewPager2.setUserInputEnabled(false);
     }
 }

@@ -68,13 +68,15 @@
             android:layout_height="wrap_content">
 
             <ImageButton
+                android:paddingHorizontal="10dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:src="@drawable/iconsuffle"
                 android:id="@+id/imageButtonSuffle"
                 android:scaleType="fitXY"
                 android:background="@color/transparent"
                 android:layout_width="0dp"
-                android:layout_height="60dp"/>
+                android:layout_height="50dp"/>
 
             <ImageButton
                 android:layout_weight="1"
@@ -104,10 +106,12 @@
                 android:src="@drawable/iconnext" />
 
             <ImageButton
+                android:paddingHorizontal="10dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/imageButtonRepeat"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:background="@color/transparent"
                 android:scaleType="fitXY"
                 android:src="@drawable/iconrepeat" />
