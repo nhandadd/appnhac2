@@ -62,7 +62,6 @@ public class SearchBaihatAdapter extends RecyclerView.Adapter<SearchBaihatAdapte
             tvBaihatTk = itemView.findViewById(R.id.tvTenBaihatTk);
             tvCasiTk = itemView.findViewById(R.id.tvTenCasiTk);
             imgBaihatTk = itemView.findViewById(R.id.imageBaihatTk);
-            imgLuotthichTk = itemView.findViewById(R.id.imageLuotthichTk);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,31 +70,6 @@ public class SearchBaihatAdapter extends RecyclerView.Adapter<SearchBaihatAdapte
                      context.startActivity(intent);
                 }
             });
-            imgLuotthichTk.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    imgLuotthichTk.setImageResource(R.drawable.iconloved);
-                    DataService dataService = ApiService.getService();
-                    Call<String> callLuotthich = dataService.UpdateLuotThich("1",baihatArrayList.get(getPosition()).getIdBaihat());
-                    callLuotthich.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                             String ketqua = response.body();
-                             if (ketqua.equals("success")){
-                                 Toast.makeText(context, "Bạn đã thích bài hát này",Toast.LENGTH_SHORT).show();
-                             }else {
-                                 Toast.makeText(context,"Lỗi",Toast.LENGTH_SHORT).show();
-                             }
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-
-                        }
-                    });
-                }
-            });
-            imgLuotthichTk.setEnabled(false);
         }
     }
 }

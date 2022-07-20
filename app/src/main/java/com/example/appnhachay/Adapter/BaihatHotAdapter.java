@@ -86,9 +86,7 @@ public class BaihatHotAdapter extends  RecyclerView.Adapter<BaihatHotAdapter.Vie
                             }else {
                                 Toast.makeText(context, "Lỗi", Toast.LENGTH_SHORT).show();
                             }
-
                         }
-
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
 
