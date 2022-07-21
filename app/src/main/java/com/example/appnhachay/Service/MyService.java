@@ -80,7 +80,6 @@ public class MyService extends Service {
                 case 2:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         stopForeground(STOP_FOREGROUND_REMOVE);
-
                     }
                     if (mediaPlayer != null){
                     mediaPlayer.release();
@@ -125,7 +124,6 @@ public class MyService extends Service {
             public void run() {
                 if (mediaPlayer != null){
                     if (mediaPlayer.isPlaying() && mediaPlayer.getCurrentPosition() < mediaPlayer.getDuration()) {
-
                         onListenDuration.onCurrentDuration(mediaPlayer.getCurrentPosition());
                     }
                     if (isPlaying){
@@ -150,7 +148,9 @@ public class MyService extends Service {
                 mediaPlayer.start();
                 getUpdateCurrentTime();
                 AutoPlayNext(baihats);
-                notificationManager.notify(1, makeNotification(baihats,mPosition,isPlaying));
+                if (baihats.size() > 0) {
+                    notificationManager.notify(1, makeNotification(baihats,mPosition,isPlaying));
+                }
             }
         }
         public void preMp3(ArrayList<Baihat> baihats) {
@@ -162,7 +162,7 @@ public class MyService extends Service {
                 }
                 if (mPosition < baihats.size()) {
                     mPosition--;
-
+                    Log.d("BBB","first" + mPosition);
                     if (repeat == true) {
                         mPosition += 1;
                     }
@@ -180,6 +180,7 @@ public class MyService extends Service {
                         mPosition = baihats.size() - 1;
                     }
                 }
+                Log.d("BBB","last" + mPosition);
                 serviceHandler.startMp3(baihats,mPosition);
                 getUpdateCurrentTime();
             }
@@ -192,6 +193,7 @@ public class MyService extends Service {
                         mediaPlayer = null;
                         if (mPosition < baihats.size()) {
                             mPosition++;
+                            Log.d("BBB","first" + mPosition);
                             if (repeat == true) {
                                 if (mPosition == 0) {
                                     mPosition = baihats.size();
@@ -212,6 +214,7 @@ public class MyService extends Service {
                                 mPosition = 0;
                             }
                         }
+                        Log.d("BBB","last" + mPosition);
                         serviceHandler.startMp3(baihats,mPosition);
                         getUpdateCurrentTime();
                     }
@@ -229,7 +232,9 @@ public class MyService extends Service {
                 public void onPrepared(MediaPlayer mediaPlayer) {
                     mediaPlayer.start();
                     isPlaying = true;
-                    notificationManager.notify(1, makeNotification(baihats,position,isPlaying));
+                    if (baihats.size() > 0) {
+                        notificationManager.notify(1, makeNotification(baihats,mPosition,isPlaying));
+                    }
                     duration = mediaPlayer.getDuration();
                    AutoPlayNext(baihats);
                    getUpdateCurrentTime();
@@ -262,28 +267,35 @@ public class MyService extends Service {
                 @Override
                 public void run() {
                     if (next == true){
-                        if (mPosition < baihats.size()) {
-                            mPosition++;
-                            if (repeat == true) {
-                                if (mPosition == 0) {
-                                    mPosition = baihats.size();
+                        if (baihats.size() > 0) {
+                            if (mediaPlayer.isPlaying() || mediaPlayer != null) {
+                                mediaPlayer.stop();
+                                mediaPlayer.release();
+                                mediaPlayer = null;
+                                if (mPosition < baihats.size()) {
+                                    mPosition++;
+                                    if (repeat == true) {
+                                        if (mPosition == 0) {
+                                            mPosition = baihats.size();
+                                        }
+                                        mPosition -= 1;
+                                    }
+                                    if (random == true) {
+                                        Random random = new Random();
+                                        positionRandom = mPosition;
+                                        int index = random.nextInt(baihats.size());
+                                        if (index == positionRandom) {
+                                            mPosition = positionRandom + 1;
+                                        }else {
+                                            mPosition = index;
+                                        }
+                                    }
+                                    if (mPosition > (baihats.size() - 1) ){
+                                        mPosition = 0;
+                                    }
                                 }
-                                mPosition -= 1;
+                                serviceHandler.startMp3(baihats,mPosition);
                             }
-                            if (random == true) {
-                                Random random = new Random();
-                                positionRandom = mPosition;
-                                int index = random.nextInt(baihats.size());
-                                if (index == positionRandom) {
-                                    mPosition = positionRandom + 1;
-                                }else {
-                                    mPosition = index;
-                                }
-                            }
-                            if (mPosition > (baihats.size() - 1) ){
-                                mPosition = 0;
-                            }
-                            serviceHandler.startMp3(baihats,mPosition);
                         }
                         next = false;
                         handler1.removeCallbacks(this);
