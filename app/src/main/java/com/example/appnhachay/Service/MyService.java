@@ -130,7 +130,6 @@ public class MyService extends Service {
                         handler.postDelayed(this,500);
                     }
                 }
-
             }
         };
         public void pauseMp3(ArrayList<Baihat> baihats) {
@@ -155,20 +154,21 @@ public class MyService extends Service {
         }
         public void preMp3(ArrayList<Baihat> baihats) {
             if (baihats.size() > 0) {
+                positionRandom = mPosition;
                 if (mediaPlayer.isPlaying() || mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
+
                 }
                 if (mPosition < baihats.size()) {
                     mPosition--;
-                    Log.d("BBB","first" + mPosition);
                     if (repeat == true) {
                         mPosition += 1;
                     }
                     if (random == true) {
                         Random random = new Random();
-                        positionRandom = mPosition;
+
                         int index = random.nextInt(baihats.size());
                         if (index == positionRandom) {
                             mPosition = positionRandom - 1;
@@ -187,13 +187,14 @@ public class MyService extends Service {
         }
         public void nextMp3(ArrayList<Baihat> baihats){
             if (baihats.size() > 0) {
+                positionRandom = mPosition;
                     if (mediaPlayer.isPlaying() || mediaPlayer != null) {
                         mediaPlayer.stop();
                         mediaPlayer.release();
                         mediaPlayer = null;
+
                         if (mPosition < baihats.size()) {
                             mPosition++;
-                            Log.d("BBB","first" + mPosition);
                             if (repeat == true) {
                                 if (mPosition == 0) {
                                     mPosition = baihats.size();
@@ -202,7 +203,6 @@ public class MyService extends Service {
                             }
                             if (random == true) {
                                 Random random = new Random();
-                                positionRandom = mPosition;
                                 int index = random.nextInt(baihats.size());
                                 if (index == positionRandom) {
                                     mPosition = positionRandom + 1;
@@ -214,7 +214,6 @@ public class MyService extends Service {
                                 mPosition = 0;
                             }
                         }
-                        Log.d("BBB","last" + mPosition);
                         serviceHandler.startMp3(baihats,mPosition);
                         getUpdateCurrentTime();
                     }
